@@ -2,16 +2,14 @@ import {
   Controller,
   Get,
   Post,
-  Put,
-  Patch,
   UseFilters,
-  Param,
-  ParseIntPipe,
   UseInterceptors,
+  Body,
 } from '@nestjs/common';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
 import { CatsService } from './cats.service';
+import { CatRequestDto } from './dto/cats.request.dto';
 
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
@@ -20,30 +18,27 @@ export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Get()
-  getAllCat() {
-    // throw new HttpException('api is broken', 401);
-    return { cats: 'get all cats' };
-  }
-
-  @Get(':id')
-  gatOneCat(@Param('id', ParseIntPipe) param: number) {
-    console.log(param);
-    console.log(typeof param);
-    return 'one cat';
+  getCurrentCat() {
+    return 'current cat';
   }
 
   @Post()
-  createOneCat() {
-    return 'one cat';
+  async signUp(@Body() body: CatRequestDto) {
+    return await this.catsService.signUp(body);
   }
 
-  @Put(':id')
-  updateCat() {
-    return 'one cat';
+  @Post('login')
+  logIn() {
+    return 'login';
   }
 
-  @Patch(':id')
-  updatePartialCat() {
-    return 'one cat';
+  @Post('logout')
+  logOut() {
+    return 'logout';
+  }
+
+  @Post('uploat/cats')
+  uploadCatImg() {
+    return 'uploadImg';
   }
 }
