@@ -18,6 +18,8 @@ import { CatsService } from './cats.service';
 import { CatRequestDto } from './dto/cats.request.dto';
 import { readOnlyCatDto } from './dto/cats.response.dto';
 import { Request } from 'express';
+import { CurrentUser } from 'src/common/decorators/user.decorator';
+import { Cat } from './cats.schema';
 
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
@@ -31,9 +33,9 @@ export class CatsController {
   @ApiOperation({ summary: '현재 로그인한 유저 가져오기' })
   @UseGuards(JwtAuthGuard)
   @Get()
-  getCurrentCat(@Req() req: Request) {
-    console.log(req.user);
-    return req.user;
+  getCurrentCat(@CurrentUser() cat:Cat) {
+    console.log(cat);
+    return cat.readOnlyData;
   }
 
   @ApiResponse({
@@ -61,7 +63,7 @@ export class CatsController {
     return 'logout';
   }
 
-  @Post('uploat/cats')
+  @Post('upload')
   uploadCatImg() {
     return 'uploadImg';
   }
