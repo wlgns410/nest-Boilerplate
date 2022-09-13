@@ -32,6 +32,7 @@ export class CatsController {
   @UseGuards(JwtAuthGuard)
   @Get()
   getCurrentCat(@Req() req: Request) {
+    console.log(req.user);
     return req.user;
   }
 
