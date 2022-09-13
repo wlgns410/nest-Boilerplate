@@ -47,12 +47,13 @@ export class Cat extends Document {
   password: string;
 
   @Prop({
+    default: 'https://raw.githubusercontent.com/amamov/teaching-nestjs-a-to-z/main/images/1.jpeg',
     required: false,
   })
   @IsString()
   imgUrl: string;
 
-  readonly readOnlyData: { id: string; email: string; name: string };
+  readonly readOnlyData: { id: string; email: string; name: string; imgUrl: string; };
 }
 
 export const CatSchema = SchemaFactory.createForClass(Cat);
@@ -62,5 +63,6 @@ CatSchema.virtual('readOnlyData').get(function (this: Cat) {
     id: this.id,
     email: this.email,
     name: this.name,
+    imgUrl: this.imgUrl,
   };
 });
