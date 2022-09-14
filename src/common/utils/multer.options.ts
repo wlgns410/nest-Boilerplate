@@ -20,7 +20,6 @@ const createFolder = (folder: string) => {
 
 const storage = (folder: string): multer.StorageEngine => {
   createFolder(folder);
-  console.log("here : ")
   return multer.diskStorage({
     destination(req, file, cb) {
       //* 어디에 저장할 지
